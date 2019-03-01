@@ -181,7 +181,7 @@ namespace British_Policing_Script
         {
             get
             {
-                return LSPDFRPersona.BirthDay;
+                return LSPDFRPersona.Birthday;
             }
         }
 
@@ -564,12 +564,12 @@ namespace British_Policing_Script
         }
         private void DisplayLicence()
         {
-            Game.DisplayNotification("3dtextures", "mp_generic_avatar", "~b~Driving Licence", FullName, "~b~" + LSPDFRPersona.Gender + ", ~s~DOB: ~b~" + LSPDFRPersona.BirthDay.ToShortDateString() 
+            Game.DisplayNotification("3dtextures", "mp_generic_avatar", "~b~Driving Licence", FullName, "~b~" + LSPDFRPersona.Gender + ", ~s~DOB: ~b~" + LSPDFRPersona.Birthday.ToShortDateString() 
                 + "~n~~s~Licence Type: ~b~" + LicenceType.ToString()); 
         }
         private void GiveDetails()
         {
-            Game.DisplayNotification("~b~Suspect: ~s~My name is ~b~" + FullName + "~s~. I was born on ~b~" + LSPDFRPersona.BirthDay.ToShortDateString() + "~s~.");
+            Game.DisplayNotification("~b~Suspect: ~s~My name is ~b~" + FullName + "~s~. I was born on ~b~" + LSPDFRPersona.Birthday.ToShortDateString() + "~s~.");
         }
 
         private string CustomFlags = "";
@@ -596,7 +596,7 @@ namespace British_Policing_Script
         public void RunLicenceCheck()
         {
             
-            Game.DisplayNotification("3dtextures", "mpgroundlogo_cops", "~b~DVLA Records", FullName, "~y~" + LSPDFRPersona.Gender + ", ~s~Born ~y~" + LSPDFRPersona.BirthDay.ToShortDateString()
+            Game.DisplayNotification("3dtextures", "mpgroundlogo_cops", "~b~DVLA Records", FullName, "~y~" + LSPDFRPersona.Gender + ", ~s~Born ~y~" + LSPDFRPersona.Birthday.ToShortDateString()
                 + (LicenceType == LicenceTypes.None ? "~r~ No licence records." : "~n~~b~" + LicenceType.ToString() + " ~s~licence: ~b~" + LicenceStatus.ToString() + "~n~~y~" + PenaltyPoints.ToString() + " ~s~points." ));
             Game.DisplayNotification("~b~PERSON-PNC: ~s~" + DetermineFlags());
         }
