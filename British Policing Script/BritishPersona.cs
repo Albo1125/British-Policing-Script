@@ -205,7 +205,7 @@ namespace British_Policing_Script
         {
             get
             {
-                return LSPDFRPersona.IsAgent;
+                return LSPDFRPersona.RuntimeInfo.IsAgent;
             }
         }
 
@@ -213,7 +213,7 @@ namespace British_Policing_Script
         {
             get
             {
-                return LSPDFRPersona.IsCop;
+                return LSPDFRPersona.RuntimeInfo.IsCop;
             }
         }
 
@@ -221,11 +221,11 @@ namespace British_Policing_Script
         {
             get
             {
-                return LSPDFRPersona.LicenseState;
+                return LSPDFRPersona.ELicenseState;
             }
         }
 
-        public new EPedAge ModelAge
+        public new PedModelAge ModelAge
         {
             get
             {
@@ -394,8 +394,8 @@ namespace British_Policing_Script
         {
             get; 
         }
-        private BritishPersona() : base (World.EnumeratePeds().FirstOrDefault(), LSPD_First_Response.Gender.Random, new DateTime(), 0,  "", "", ELicenseState.None, 0, false, false, false)
-        {         
+        private BritishPersona(Persona persona) : base (persona.Forename, persona.Surname, persona.Gender, persona.Birthday)
+        {
             AllBritishPersona.Add(this);
         }
 
@@ -438,7 +438,7 @@ namespace British_Policing_Script
         /// Constructor that sets values based off the LSPDFR API
         /// </summary>
         /// <param name="_ped"></param>
-        public BritishPersona (Ped _ped) : this() 
+        public BritishPersona (Ped _ped) : this(Functions.GetPersonaForPed(_ped))
         {
             if (!_ped.Exists()) { Game.LogTrivial("PED DOESNT EXIST"); AllBritishPersona.Remove(this); return; }
 
@@ -512,11 +512,11 @@ namespace British_Policing_Script
             int Citations = LSPDFRPersona.Citations;
             PenaltyPoints = Citations * 3;
             
-            if (LSPDFRPersona.LicenseState == ELicenseState.Valid)
+            if (LSPDFRPersona.ELicenseState == ELicenseState.Valid)
             {
                 LicenceStatus = LicenceStatuses.Valid;
             }
-            else if (LSPDFRPersona.LicenseState == ELicenseState.Suspended)
+            else if (LSPDFRPersona.ELicenseState == ELicenseState.Suspended)
             {
                 if (EntryPoint.rnd.Next(6) < 4)
                 {
@@ -527,7 +527,7 @@ namespace British_Policing_Script
                     LicenceStatus = LicenceStatuses.Revoked;
                 }
             }
-            else if (LSPDFRPersona.LicenseState == ELicenseState.Expired)
+            else if (LSPDFRPersona.ELicenseState == ELicenseState.Expired)
             {
                 LicenceStatus = LicenceStatuses.Expired;
             }

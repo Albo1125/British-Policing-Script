@@ -61,7 +61,7 @@ namespace British_Policing_Script
                 Game.LogTrivial("British Policing Script has been initialised successfully and is now loading INI, XML and dependencies. Standby...");
                 AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(LSPDFRResolveEventHandler);
                 
-                LSPDFRPlusSecurityGuid = LSPDFR_.API.ProtectedFunctions.GenerateSecurityGuid(Assembly.GetExecutingAssembly(), "British Policing Script", "Albo1125", "u3dDhOrbc91cUST+XROf0Wd/MFZXG7D5ufrg4QJCX5bvAJxITxFgtmiwecxqL9kawDa5rU6JgdVFqszg1XES8T0X107MhMrbZDgm6v46iYhD07bdnjBgMSaTGzIHgLFV/PAAvTjdDy5fLmAkxU1jX7w2pabZpD9BFW5hWpPZTs8=");
+                //LSPDFRPlusSecurityGuid = LSPDFR_.API.ProtectedFunctions.GenerateSecurityGuid(Assembly.GetExecutingAssembly(), "British Policing Script", "Albo1125", "u3dDhOrbc91cUST+XROf0Wd/MFZXG7D5ufrg4QJCX5bvAJxITxFgtmiwecxqL9kawDa5rU6JgdVFqszg1XES8T0X107MhMrbZDgm6v46iYhD07bdnjBgMSaTGzIHgLFV/PAAvTjdDy5fLmAkxU1jX7w2pabZpD9BFW5hWpPZTs8=");
                 Menus.InitialiseMenus();
                 RegisterCallouts();
                 CourtSystem.CourtSystemMainLogic();
