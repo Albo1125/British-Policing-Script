@@ -11,6 +11,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 using LSPD_First_Response.Engine.Scripting.Entities;
+using LSPD_First_Response;
 
 namespace British_Policing_Script
 {
@@ -153,101 +154,35 @@ namespace British_Policing_Script
             
         }
 
-        public new string Forename
-        {
-            get
-            {
-                return LSPDFRPersona.Forename;
-            }
-        }
+        public new string Forename => LSPDFRPersona.Forename;
 
-        public new string Surname
-        {
-            get
-            {
-                return LSPDFRPersona.Surname;
-            }
-        }
+        public new string Surname => LSPDFRPersona.Surname;
 
-        public new string FullName
-        {
-            get
-            {
-                return LSPDFRPersona.FullName;
-            }
-        }
+        public new string FullName => LSPDFRPersona.FullName;
 
-        public new DateTime BirthDay
-        {
-            get
-            {
-                return LSPDFRPersona.Birthday;
-            }
-        }
+        [Obsolete("Use Birthday instead")]
+        public new DateTime BirthDay => LSPDFRPersona.Birthday;
 
-        public new int Citations
-        {
-            get
-            {
-                return LSPDFRPersona.Citations;
-            }
-        }
+        public new DateTime Birthday => LSPDFRPersona.Birthday;
 
-        public new LSPD_First_Response.Gender Gender
-        {
-            get
-            {
-                return LSPDFRPersona.Gender;
-            }
-        }
+        public new int Citations => LSPDFRPersona.Citations;
 
-        public new bool IsAgent
-        {
-            get
-            {
-                return LSPDFRPersona.RuntimeInfo.IsAgent;
-            }
-        }
+        public new Gender Gender => LSPDFRPersona.Gender;
 
-        public new bool IsCop
-        {
-            get
-            {
-                return LSPDFRPersona.RuntimeInfo.IsCop;
-            }
-        }
+        public new bool IsAgent => LSPDFRPersona.RuntimeInfo.IsAgent;
 
-        public new ELicenseState LicenseState
-        {
-            get
-            {
-                return LSPDFRPersona.ELicenseState;
-            }
-        }
+        public new bool IsCop => LSPDFRPersona.RuntimeInfo.IsCop;
 
-        public new PedModelAge ModelAge
-        {
-            get
-            {
-                return LSPDFRPersona.ModelAge;
-            }
-        }
+        [Obsolete("Use ELicenseState instead")]
+        public ELicenseState LicenseState => LSPDFRPersona.ELicenseState;
 
-        public new int TimesStopped
-        {
-            get
-            {
-                return LSPDFRPersona.TimesStopped;
-            }
-        }
+        public new ELicenseState ELicenseState => LSPDFRPersona.ELicenseState;
 
-        public new bool Wanted
-        {
-            get
-            {
-                return LSPDFRPersona.Wanted;
-            }
-        }
+        public new PedModelAge ModelAge => LSPDFRPersona.ModelAge;
+
+        public new int TimesStopped => LSPDFRPersona.TimesStopped;
+
+        public new bool Wanted => LSPDFRPersona.Wanted;
 
 
 

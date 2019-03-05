@@ -1,13 +1,9 @@
-﻿using Rage;
+﻿using LSPDFR_.API;
+using Rage;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
-namespace British_Policing_Script.API
-{
+namespace British_Policing_Script.API {
     public static class Functions
     {
         /// <summary>
@@ -85,7 +81,7 @@ namespace British_Policing_Script.API
         /// Raised whenever the player orders a ped out of a vehicle on a traffic stop (also raised by LSPDFR+, rather use LSPDFR+'s event).
         /// </summary>
         [Obsolete("Use LSPDFR+'s event.")]
-        public static event LSPDFR_.API.PedEvent PedOrderedOutOfVehicle;
+        public static event PedEvent PedOrderedOutOfVehicle;
         internal static void OnPedOrderedOutOfVehicle(Ped ped)
         {
 
