@@ -11,6 +11,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 using LSPD_First_Response.Engine.Scripting.Entities;
+using LSPD_First_Response;
 
 namespace British_Policing_Script
 {
@@ -22,7 +23,7 @@ namespace British_Policing_Script
 
         internal static string[] WantedReasons = new string[] {"DRUNK AND DISORDERLY", "CRIMINAL DAMAGE", "COMMON ASSAULT", "ACTUAL BODILY HARM", "BURGLARY", "BREACH OF BAIL CONDITIONS", "DOMESTIC ABUSE", "HARASSMENT", "SHOPLIFTING",
         "GOING EQUIPPED TO STEAL", "HANDLING STOLEN GOODS", "INTERFERING WITH A MOTOR VEHICLE", "ARSON", "ESCAPE FROM LAWFUL CUSTODY", "FEAR AND PROVOCATION OF VIOLENCE", "GRIEVOUS BODILY HARM", "MAKING OFF WITHOUT PAYMENT",
-        "TRESPASSING", "FRAUD", "THEFT FROM A MOTOR VEHICLE", "AGGRAVATED VEHICLE TAKING", "TAKING A MOTOR VEHICLE WITHOUT THE OWNER'S CONSENT"};
+        "AGGRAVATED TRESPASS", "FRAUD", "THEFT FROM A MOTOR VEHICLE", "AGGRAVATED VEHICLE TAKING", "TAKING A MOTOR VEHICLE WITHOUT THE OWNER'S CONSENT", "RECALL TO PRISON", "DANGEROUS DRIVING"};
 
         internal static string[] DrugsReasons = new string[] {"POSSESSION OF CLASS A DRUGS", "POSSESSION OF CLASS B DRUGS", "POSSESSION OF CLASS C DRUGS", "POSSESSION OF PSYCHOACTIVE SUBSTANCES WITH INTENT TO SUPPLY",
         "POSSESSION OF CLASS A DRUGS WITH INTENT TO SUPPLY", "POSSESSION OF CLASS B DRUGS WITH INTENT TO SUPPLY", "POSSESSION OF CLASS C DRUGS WITH INTENT TO SUPPLY" };
@@ -153,101 +154,35 @@ namespace British_Policing_Script
             
         }
 
-        public new string Forename
-        {
-            get
-            {
-                return LSPDFRPersona.Forename;
-            }
-        }
+        public new string Forename => LSPDFRPersona.Forename;
 
-        public new string Surname
-        {
-            get
-            {
-                return LSPDFRPersona.Surname;
-            }
-        }
+        public new string Surname => LSPDFRPersona.Surname;
 
-        public new string FullName
-        {
-            get
-            {
-                return LSPDFRPersona.FullName;
-            }
-        }
+        public new string FullName => LSPDFRPersona.FullName;
 
-        public new DateTime BirthDay
-        {
-            get
-            {
-                return LSPDFRPersona.BirthDay;
-            }
-        }
+        [Obsolete("Use Birthday instead")]
+        public new DateTime BirthDay => LSPDFRPersona.Birthday;
 
-        public new int Citations
-        {
-            get
-            {
-                return LSPDFRPersona.Citations;
-            }
-        }
+        public new DateTime Birthday => LSPDFRPersona.Birthday;
 
-        public new LSPD_First_Response.Gender Gender
-        {
-            get
-            {
-                return LSPDFRPersona.Gender;
-            }
-        }
+        public new int Citations => LSPDFRPersona.Citations;
 
-        public new bool IsAgent
-        {
-            get
-            {
-                return LSPDFRPersona.IsAgent;
-            }
-        }
+        public new Gender Gender => LSPDFRPersona.Gender;
 
-        public new bool IsCop
-        {
-            get
-            {
-                return LSPDFRPersona.IsCop;
-            }
-        }
+        public new bool IsAgent => LSPDFRPersona.RuntimeInfo.IsAgent;
 
-        public new ELicenseState LicenseState
-        {
-            get
-            {
-                return LSPDFRPersona.LicenseState;
-            }
-        }
+        public new bool IsCop => LSPDFRPersona.RuntimeInfo.IsCop;
 
-        public new EPedAge ModelAge
-        {
-            get
-            {
-                return LSPDFRPersona.ModelAge;
-            }
-        }
+        [Obsolete("Use ELicenseState instead")]
+        public ELicenseState LicenseState => LSPDFRPersona.ELicenseState;
 
-        public new int TimesStopped
-        {
-            get
-            {
-                return LSPDFRPersona.TimesStopped;
-            }
-        }
+        public new ELicenseState ELicenseState => LSPDFRPersona.ELicenseState;
 
-        public new bool Wanted
-        {
-            get
-            {
-                return LSPDFRPersona.Wanted;
-            }
-        }
+        public new PedModelAge ModelAge => LSPDFRPersona.ModelAge;
+
+        public new int TimesStopped => LSPDFRPersona.TimesStopped;
+
+        public new bool Wanted => LSPDFRPersona.Wanted;
 
 
 
@@ -394,8 +329,8 @@ namespace British_Policing_Script
         {
             get; 
         }
-        private BritishPersona() : base (World.EnumeratePeds().FirstOrDefault(), LSPD_First_Response.Gender.Random, new DateTime(), 0,  "", "", ELicenseState.None, 0, false, false, false)
-        {         
+        private BritishPersona(Persona persona) : base (persona.Forename, persona.Surname, persona.Gender, persona.Birthday)
+        {
             AllBritishPersona.Add(this);
         }
 
@@ -438,7 +373,7 @@ namespace British_Policing_Script
         /// Constructor that sets values based off the LSPDFR API
         /// </summary>
         /// <param name="_ped"></param>
-        public BritishPersona (Ped _ped) : this() 
+        public BritishPersona (Ped _ped) : this(Functions.GetPersonaForPed(_ped))
         {
             if (!_ped.Exists()) { Game.LogTrivial("PED DOESNT EXIST"); AllBritishPersona.Remove(this); return; }
 
@@ -512,11 +447,11 @@ namespace British_Policing_Script
             int Citations = LSPDFRPersona.Citations;
             PenaltyPoints = Citations * 3;
             
-            if (LSPDFRPersona.LicenseState == ELicenseState.Valid)
+            if (LSPDFRPersona.ELicenseState == ELicenseState.Valid)
             {
                 LicenceStatus = LicenceStatuses.Valid;
             }
-            else if (LSPDFRPersona.LicenseState == ELicenseState.Suspended)
+            else if (LSPDFRPersona.ELicenseState == ELicenseState.Suspended)
             {
                 if (EntryPoint.rnd.Next(6) < 4)
                 {
@@ -527,7 +462,7 @@ namespace British_Policing_Script
                     LicenceStatus = LicenceStatuses.Revoked;
                 }
             }
-            else if (LSPDFRPersona.LicenseState == ELicenseState.Expired)
+            else if (LSPDFRPersona.ELicenseState == ELicenseState.Expired)
             {
                 LicenceStatus = LicenceStatuses.Expired;
             }
@@ -564,12 +499,12 @@ namespace British_Policing_Script
         }
         private void DisplayLicence()
         {
-            Game.DisplayNotification("3dtextures", "mp_generic_avatar", "~b~Driving Licence", FullName, "~b~" + LSPDFRPersona.Gender + ", ~s~DOB: ~b~" + LSPDFRPersona.BirthDay.ToShortDateString() 
+            Game.DisplayNotification("3dtextures", "mp_generic_avatar", "~b~Driving Licence", FullName, "~b~" + LSPDFRPersona.Gender + ", ~s~DOB: ~b~" + LSPDFRPersona.Birthday.ToShortDateString() 
                 + "~n~~s~Licence Type: ~b~" + LicenceType.ToString()); 
         }
         private void GiveDetails()
         {
-            Game.DisplayNotification("~b~Suspect: ~s~My name is ~b~" + FullName + "~s~. I was born on ~b~" + LSPDFRPersona.BirthDay.ToShortDateString() + "~s~.");
+            Game.DisplayNotification("~b~Suspect: ~s~My name is ~b~" + FullName + "~s~. I was born on ~b~" + LSPDFRPersona.Birthday.ToShortDateString() + "~s~.");
         }
 
         private string CustomFlags = "";
@@ -596,7 +531,7 @@ namespace British_Policing_Script
         public void RunLicenceCheck()
         {
             
-            Game.DisplayNotification("3dtextures", "mpgroundlogo_cops", "~b~DVLA Records", FullName, "~y~" + LSPDFRPersona.Gender + ", ~s~Born ~y~" + LSPDFRPersona.BirthDay.ToShortDateString()
+            Game.DisplayNotification("3dtextures", "mpgroundlogo_cops", "~b~DVLA Records", FullName, "~y~" + LSPDFRPersona.Gender + ", ~s~Born ~y~" + LSPDFRPersona.Birthday.ToShortDateString()
                 + (LicenceType == LicenceTypes.None ? "~r~ No licence records." : "~n~~b~" + LicenceType.ToString() + " ~s~licence: ~b~" + LicenceStatus.ToString() + "~n~~y~" + PenaltyPoints.ToString() + " ~s~points." ));
             Game.DisplayNotification("~b~PERSON-PNC: ~s~" + DetermineFlags());
         }

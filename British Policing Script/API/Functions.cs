@@ -1,13 +1,9 @@
-﻿using Rage;
+﻿using LSPDFR_.API;
+using Rage;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
-namespace British_Policing_Script.API
-{
+namespace British_Policing_Script.API {
     public static class Functions
     {
         /// <summary>
@@ -41,7 +37,7 @@ namespace British_Policing_Script.API
         /// <param name="CourtVerdict">The decision the court will come to, e.g. 'Sentenced to 5 months in prison'</param>
         public static void CreateNewCourtCase(BritishPersona DefendantPersona, string Crime, int GuiltyChance, string CourtVerdict)
         {
-             CourtSystem.CreateNewCourtCase(DefendantPersona.FullName, DefendantPersona.LSPDFRPersona.BirthDay, Crime, DateTime.Now, GuiltyChance, CourtVerdict, CourtSystem.DetermineCourtHearingDate(), false);
+             CourtSystem.CreateNewCourtCase(DefendantPersona.FullName, DefendantPersona.LSPDFRPersona.Birthday, Crime, DateTime.Now, GuiltyChance, CourtVerdict, CourtSystem.DetermineCourtHearingDate(), false);
         }
 
         /// <summary>
@@ -54,7 +50,7 @@ namespace British_Policing_Script.API
         /// <param name="ResultsPublishTime">The DateTime when the results will become available to the player.</param>
         public static void CreateNewCourtCase(BritishPersona Defendant, string Crime, int GuiltyChance, string CourtVerdict, DateTime ResultsPublishTime)
         {
-            CourtSystem.CreateNewCourtCase(Defendant.FullName, Defendant.LSPDFRPersona.BirthDay, Crime, DateTime.Now, GuiltyChance, CourtVerdict, ResultsPublishTime, false);
+            CourtSystem.CreateNewCourtCase(Defendant.FullName, Defendant.LSPDFRPersona.Birthday, Crime, DateTime.Now, GuiltyChance, CourtVerdict, ResultsPublishTime, false);
         }
 
         /// <summary>
@@ -85,7 +81,7 @@ namespace British_Policing_Script.API
         /// Raised whenever the player orders a ped out of a vehicle on a traffic stop (also raised by LSPDFR+, rather use LSPDFR+'s event).
         /// </summary>
         [Obsolete("Use LSPDFR+'s event.")]
-        public static event LSPDFR_.API.PedEvent PedOrderedOutOfVehicle;
+        public static event PedEvent PedOrderedOutOfVehicle;
         internal static void OnPedOrderedOutOfVehicle(Ped ped)
         {
 

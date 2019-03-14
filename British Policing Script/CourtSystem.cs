@@ -190,7 +190,7 @@ namespace British_Policing_Script
 
         public static void CreateNewCourtCase(BritishPersona Defendant, string Crime, int GuiltyChance, string CourtVerdict)
         {
-            CreateNewCourtCase(Defendant.FullName, Defendant.LSPDFRPersona.BirthDay, Crime, DateTime.Now, GuiltyChance, CourtVerdict, DetermineCourtHearingDate(), false);
+            CreateNewCourtCase(Defendant.FullName, Defendant.LSPDFRPersona.Birthday, Crime, DateTime.Now, GuiltyChance, CourtVerdict, DetermineCourtHearingDate(), false);
         }
 
         public static DateTime DetermineCourtHearingDate()
