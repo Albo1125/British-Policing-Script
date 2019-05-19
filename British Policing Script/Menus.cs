@@ -14,7 +14,7 @@ namespace British_Policing_Script
     internal static class Menus
     {
         private static readonly MenuPool MenuPool = new MenuPool();
-        
+
         private static UIMenu ChecksMenu;
         private static UIMenuItem CheckNameItem;
         private static UIMenuItem CheckInsuranceItem;
@@ -65,7 +65,9 @@ namespace British_Policing_Script
         private static void OnItemSelect(UIMenu sender, UIMenuItem selectedItem, int index)
         {
             if (sender != ChecksMenu)
+            {
                 return;
+            }
 
             if (selectedItem == CheckNameItem)
             {
@@ -146,7 +148,9 @@ namespace British_Policing_Script
                 MenuPool.ProcessMenus();
 
                 if (CourtsMenu.Visible)
+                {
                     CourtsMenu.Update();
+                }
             }
             catch (Exception ex)
             {
