@@ -42,7 +42,7 @@ namespace British_Policing_Script
         internal static string[] AudioFilesToCheckFor = new string[] { "LSPDFR/audio/scanner/British Policing Script Audio/Crimes/BRITISHCRIME_FAILTOSTOP.wav" };
         internal static string[] OtherFilesToCheckFor = new string[] { "Plugins/LSPDFR/Traffic Policer.dll", "Plugins/LSPDFR/Arrest Manager.dll", "Plugins/LSPDFR/LSPDFR+.dll" };
         internal static Version RAGENativeUIVersion = new Version("1.6.3.0");
-        internal static Version MadeForLSPDFRVersion = new Version("0.4.39.22580");
+        internal static Version MadeForLSPDFRVersion = new Version("0.4.2");
 
 
         internal static string DownloadURL = "http://bit.ly/BritishScript";
